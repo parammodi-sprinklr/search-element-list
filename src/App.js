@@ -1,7 +1,44 @@
-import React from 'react';
+// App.jsx
+import React, { useState, useEffect } from 'react';
+import VirtualizedList from './components/VirtualizedList';
+import SearchBar from './components/SearchBar';
+import { search } from './utils/search';
+import { comparator } from './utils/comparator';
+import { ITEMS } from './constants';
 
-export default function App() {
+const App = () => {
+  const [items, setItems] = useState([]);
+  const [query, setQuery] = useState('');
+  const [scrollToIndex, setScrollToIndex] = useState(null);
+
+  useEffect(() => {
+    // Simulate fetching items
+    const fetchItems = () => {
+      const itemList = Array.from(
+        { length: 1000 },
+        (_, i) => `${ITEMS[i % ITEMS.length]}${i + 1}`
+      );
+      setItems(itemList);
+    };
+    fetchItems();
+  }, []);
+
+  const handleSearch = () => {
+    const index = search(items, query, comparator);
+    setScrollToIndex(index === -1 ? null : index);
+  };
+
   return (
-    <h1>Hello World</h1>
+    <div>
+      <h1>Search Functionality</h1>
+      <SearchBar
+        query={query}
+        onQueryChange={setQuery}
+        onSearch={handleSearch}
+      />
+      <VirtualizedList items={items} scrollToIndex={scrollToIndex} />
+    </div>
   );
-}
+};
+
+export default App;

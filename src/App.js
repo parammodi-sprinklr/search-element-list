@@ -4,7 +4,6 @@ import VirtualizedList from './components/VirtualizedList';
 import SearchBar from './components/SearchBar';
 import { search } from './utils/search';
 import { comparator } from './utils/comparator';
-import { ITEMS } from './constants';
 
 const App = () => {
   const [items, setItems] = useState([]);
@@ -13,11 +12,9 @@ const App = () => {
 
   useEffect(() => {
     // Simulate fetching items
+    //For Simplicity of comparision, we are generating strings which have numeric value
     const fetchItems = () => {
-      const itemList = Array.from(
-        { length: 1000 },
-        (_, i) => `${ITEMS[i % ITEMS.length]}${i + 1}`
-      );
+      const itemList = Array.from({ length: 1000 }, (_, i) => `${i + 1}`);
       setItems(itemList);
     };
     fetchItems();

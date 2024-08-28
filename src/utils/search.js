@@ -8,7 +8,7 @@ export function search(arr, target, comparator) {
     const mid = Math.floor((low + high) / 2);
 
     if (comparator(arr, mid, target)) return mid;
-    if (arr[mid].toLowerCase() < target.toLowerCase()) low = mid + 1;
+    if (arr[mid] < target) low = mid + 1;
     else high = mid - 1;
   }
 

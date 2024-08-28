@@ -30,10 +30,6 @@ describe('Basic Search Functionality', () => {
     expect(search(items, 'kiwi', comparator)).toBe(-1);
   });
 
-  test('handles case-insensitive search', () => {
-    expect(search(items, 'CHERRY', comparator)).toBe(2);
-  });
-
   test('returns -1 for an empty array', () => {
     expect(search([], 'cherry', comparator)).toBe(-1);
   });

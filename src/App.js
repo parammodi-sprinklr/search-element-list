@@ -12,7 +12,6 @@ const App = () => {
 
   useEffect(() => {
     // Simulate fetching items
-    //For Simplicity of comparision, we are generating strings which have numeric value
     const fetchItems = () => {
       const itemList = Array.from({ length: 1000 }, (_, i) => `${i + 1}`);
       setItems(itemList);

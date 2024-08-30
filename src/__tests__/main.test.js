@@ -40,7 +40,7 @@ describe('Advanced Search Functionality', () => {
   const largeArray = Array.from({ length: 1024 }, (_, i) => `Item ${i + 1}`);
   const target = 'Item 512';
 
-  test('search should implement binary search with limited comparisons', () => {
+  test('search should implement efficient algorithm to minimize comparistions', () => {
     let compareCount = 0;
 
     const comparator = (arr, indexToCheck, target) => {

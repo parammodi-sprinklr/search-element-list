@@ -5,6 +5,7 @@ import SearchBar from './components/SearchBar';
 import { search } from './utils/search';
 import { comparator } from './utils/comparator';
 
+//App Component
 const App = () => {
   const [items, setItems] = useState([]);
   const [query, setQuery] = useState('');

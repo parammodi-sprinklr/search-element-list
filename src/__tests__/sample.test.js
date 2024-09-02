@@ -9,7 +9,7 @@ import VirtualizedList from '../components/VirtualizedList';
 
 describe('Basic Search Functionality', () => {
   const comparator = (arr, indexToCheck, target) => {
-    return arr[indexToCheck].toLowerCase() === target.toLowerCase();
+    return arr[indexToCheck] === target;
   };
 
   const items = [

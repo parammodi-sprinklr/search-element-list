@@ -13,14 +13,16 @@ const App = () => {
   useEffect(() => {
     // Simulate fetching items
     const fetchItems = () => {
-      const itemList = Array.from({ length: 1000 }, (_, i) => `${i + 1}`);
+      const itemList = Array.from({ length: 10000 }, (_, i) => i + 1);
       setItems(itemList);
     };
     fetchItems();
   }, []);
 
   const handleSearch = () => {
-    const index = search(items, query, comparator);
+    // candidate needs to implement this search function
+    // comparator is already defined, which checks for strict equal to comparision
+    const index = search(items, +query, comparator);
     setScrollToIndex(index === -1 ? null : index);
   };
 
@@ -32,6 +34,7 @@ const App = () => {
         onQueryChange={setQuery}
         onSearch={handleSearch}
       />
+      {/* User needs to implement this VirtualizedList Component */}
       <VirtualizedList items={items} scrollToIndex={scrollToIndex} />
     </div>
   );

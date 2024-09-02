@@ -37,8 +37,8 @@ describe('Basic Search Functionality', () => {
 
 describe('Advanced Search Functionality', () => {
   // Large array for the test
-  const largeArray = Array.from({ length: 1024 }, (_, i) => `Item ${i + 1}`);
-  const target = 'Item 512';
+  const largeArray = Array.from({ length: 10240 }, (_, i) => `Item ${i + 1}`);
+  const target = 'Item 5120';
 
   test('search should implement efficient algorithm to minimize comparistions', () => {
     let compareCount = 0;
@@ -62,6 +62,7 @@ describe('Advanced Search Functionality', () => {
 
     // Ensure the comparison count does not exceed the threshold
     expect(compareCount).toBeLessThanOrEqual(comparisonThreshold);
+    expect(compareCount).toBeGreaterThan(0);
   });
 });
 
@@ -85,7 +86,7 @@ describe('VirtualizedList Component', () => {
   });
 
   test('renders more items when scrolling down', () => {
-    const { getByTestId, getAllByText } = render(
+    const { getByTestId, getAllByText, getByText } = render(
       <VirtualizedList items={items} scrollToIndex={null} />
     );
 
@@ -94,5 +95,8 @@ describe('VirtualizedList Component', () => {
 
     const renderedItems = getAllByText(/Item \d+/);
     expect(renderedItems.length).toBe(Math.ceil(400 / 20)); // Number of items that fit in the viewport
+
+    const targetItem = getByText('Item 51');
+    expect(targetItem).toBeInTheDocument();
   });
 });

@@ -22,15 +22,18 @@ describe('Basic Search Functionality', () => {
     'grape',
   ];
 
-  test('finds the index of an existing item', () => {
+  //finds the index of an existing item
+  test('Test #1', () => {
     expect(search(items, 'cherry', comparator)).toBe(2);
   });
 
-  test('returns -1 for an item not found', () => {
+  //returns -1 for an item not found
+  test('Test #2', () => {
     expect(search(items, 'kiwi', comparator)).toBe(-1);
   });
 
-  test('returns -1 for an empty array', () => {
+  //returns -1 for an empty array
+  test('Test #3', () => {
     expect(search([], 'cherry', comparator)).toBe(-1);
   });
 });
@@ -40,7 +43,8 @@ describe('Advanced Search Functionality', () => {
   const largeArray = Array.from({ length: 10240 }, (_, i) => `Item ${i + 1}`);
   const target = 'Item 5120';
 
-  test('search should implement efficient algorithm to minimize comparistions', () => {
+  //search should implement efficient algorithm to minimize comparistions
+  test('Test #1', () => {
     let compareCount = 0;
 
     const comparator = (arr, indexToCheck, target) => {
@@ -69,7 +73,8 @@ describe('Advanced Search Functionality', () => {
 describe('VirtualizedList Component', () => {
   const items = Array.from({ length: 1000 }, (_, i) => `Item ${i + 1}`);
 
-  test('renders the correct number of items initially', () => {
+  //renders the correct number of items initially
+  test('Test #1', () => {
     const { getAllByText } = render(
       <VirtualizedList items={items} scrollToIndex={null} />
     );
@@ -77,15 +82,20 @@ describe('VirtualizedList Component', () => {
     expect(renderedItems.length).toBe(Math.ceil(400 / 20)); // Number of items that fit in the viewport
   });
 
-  test('scrolls to the correct item', () => {
-    const { getByText } = render(
+  //scrolls to the correct item
+  test('Test #2', () => {
+    const { getByText, queryByText } = render(
       <VirtualizedList items={items} scrollToIndex={100} />
     );
-    const targetItem = getByText('Item 101');
-    expect(targetItem).toBeInTheDocument();
+    const targetExpectedItem = getByText('Item 101');
+    expect(targetExpectedItem).toBeVisible();
+
+    const targetStartItem = queryByText('Item 5');
+    expect(targetStartItem).toBeNull();
   });
 
-  test('renders more items when scrolling down', () => {
+  //renders more items when scrolling down
+  test('Test #3', () => {
     const { getByTestId, getAllByText, getByText } = render(
       <VirtualizedList items={items} scrollToIndex={null} />
     );
@@ -94,9 +104,12 @@ describe('VirtualizedList Component', () => {
     fireEvent.scroll(container, { target: { scrollTop: 1000 } });
 
     const renderedItems = getAllByText(/Item \d+/);
-    expect(renderedItems.length).toBe(Math.ceil(400 / 20)); // Number of items that fit in the viewport
+    expect(renderedItems.length).toBe(Math.ceil(560 / 28)); // Number of items that fit in the viewport
 
-    const targetItem = getByText('Item 51');
-    expect(targetItem).toBeInTheDocument();
+    const targetStartItem = getByText('Item 37');
+    expect(targetStartItem).toBeVisible();
+
+    const targetEndItem = getByText('Item 54');
+    expect(targetEndItem).toBeVisible();
   });
 });

@@ -27,8 +27,10 @@ const App = () => {
   };
 
   return (
-    <div>
-      <h1>Search Functionality</h1>
+    <div className="h-full w-full flex flex-col items-center gap-6 m-auto my-10 border rounded-xl pt-4 shadow-xl bg-gray-100 max-w-md">
+      <h1 className="text-xl font-bold text-gray-700">
+        Virtualization with Search
+      </h1>
       <SearchBar
         query={query}
         onQueryChange={setQuery}

@@ -31,10 +31,13 @@ describe('VirtualizedList Component', () => {
   const items = Array.from({ length: 1000 }, (_, i) => `Item ${i + 1}`);
 
   test('scrolls to the correct item', () => {
-    const { getByText } = render(
+    const { getByText, queryByText } = render(
       <VirtualizedList items={items} scrollToIndex={100} />
     );
-    const targetItem = getByText('Item 101');
-    expect(targetItem).toBeInTheDocument();
+    const targetExpectedItem = getByText('Item 101');
+    expect(targetExpectedItem).toBeVisible();
+
+    const targetStartItem = queryByText('Item 20');
+    expect(targetStartItem).toBeNull();
   });
 });

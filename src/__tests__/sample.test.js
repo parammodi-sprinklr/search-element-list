@@ -7,6 +7,36 @@ import { search } from '../utils/search';
 // VirtualizedList.test.js
 import VirtualizedList from '../components/VirtualizedList';
 
+const forbiddenLibraries = [
+  'react-window',
+  'react-virtualized',
+  'react-virtual',
+  'react-tiny-virtual-list',
+  'react-infinite',
+  'react-infinite-scroller',
+  'react-lazyload',
+  'react-list',
+  '@tanstack/react-virtual',
+  'react-infinite-grid',
+];
+
+describe('Virtualized List External Libraries', () => {
+  test('should fail if any external library for virtualization is used', () => {
+    forbiddenLibraries.forEach((lib) => {
+      try {
+        require(lib);
+        throw new Error(
+          `External virtualization library "${lib}" is not allowed.`
+        );
+      } catch (error) {
+        if (error.code !== 'MODULE_NOT_FOUND') {
+          throw error;
+        }
+      }
+    });
+  });
+});
+
 describe('Basic Search Functionality', () => {
   const comparator = (arr, indexToCheck, target) => {
     return arr[indexToCheck] === target;
@@ -27,7 +57,7 @@ describe('Basic Search Functionality', () => {
   });
 });
 
-describe('VirtualizedList Component', () => {
+describe('Virtualized List Functionality', () => {
   const items = Array.from({ length: 1000 }, (_, i) => `Item ${i + 1}`);
 
   test('scrolls to the correct item', () => {

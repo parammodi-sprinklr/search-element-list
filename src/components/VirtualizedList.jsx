@@ -49,10 +49,13 @@ const VirtualizedList = ({ items, scrollToIndex }) => {
       data-testid="virtualized-container"
       className="w-full h-96 bg-white border border-gray-300 rounded-lg shadow-sm overflow-y-auto"
     >
-      {items.map((item, index) => (
-        <ListItem key={index} item={item} />
-        //We have created ListItem component, Do not use any other component to render each item.
-      ))}
+      <div style={{ height: items.length * itemHeight, position: 'relative' }}>
+        <div style={{ transform: `translateY(${startIndex * itemHeight}px)` }}>
+          {items.slice(startIndex, endIndex).map((item, index) => (
+            <ListItem key={index} item={item} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

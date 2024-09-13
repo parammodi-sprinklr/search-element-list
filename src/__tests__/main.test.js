@@ -2,14 +2,14 @@ import App from '../App';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-// search.test.js
 import { search } from '../utils/search';
-// VirtualizedList.test.js
+import { generateRandomArray } from '../utils/generateRandomArray';
+
 import VirtualizedList from '../components/VirtualizedList';
 
 describe('Basic Search Functionality', () => {
   const comparator = (arr, indexToCheck, target) => {
-    return arr[indexToCheck].toLowerCase() === target.toLowerCase();
+    return arr[indexToCheck] === target;
   };
 
   const items = [
@@ -40,8 +40,13 @@ describe('Basic Search Functionality', () => {
 
 describe('Advanced Search Functionality', () => {
   // Large array for the test
-  const largeArray = Array.from({ length: 10240 }, (_, i) => `Item ${i + 1}`);
-  const target = 'Item 5120';
+  const target = 50120;
+  let largeArray = generateRandomArray(10000, 1, 100000);
+
+  if (!largeArray.find((_item) => _item === 50120)) {
+    largeArray.push(50120);
+    largeArray = largeArray.sort((a, b) => a - b);
+  }
 
   //search should implement efficient algorithm to minimize comparistions
   test('Test #1', () => {
@@ -49,7 +54,7 @@ describe('Advanced Search Functionality', () => {
 
     const comparator = (arr, indexToCheck, target) => {
       compareCount++;
-      return arr[indexToCheck].toLowerCase() === target.toLowerCase();
+      return arr[indexToCheck] === target;
     };
     // Execute the search
     const index = search(largeArray, target, comparator);

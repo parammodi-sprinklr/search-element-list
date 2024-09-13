@@ -4,6 +4,7 @@ import VirtualizedList from './components/VirtualizedList';
 import SearchBar from './components/SearchBar';
 import { search } from './utils/search';
 import { comparator } from './utils/comparator';
+import { generateRandomArray } from './utils/generateRandomArray';
 
 const App = () => {
   const [items, setItems] = useState([]);
@@ -13,7 +14,7 @@ const App = () => {
   useEffect(() => {
     // Simulate fetching items
     const fetchItems = () => {
-      const itemList = Array.from({ length: 10000 }, (_, i) => i + 1);
+      const itemList = generateRandomArray(10000, 1, 100000);
       setItems(itemList);
     };
     fetchItems();
@@ -29,7 +30,7 @@ const App = () => {
   return (
     <div className="h-full w-full flex flex-col items-center gap-6 m-auto my-10 border rounded-xl pt-4 shadow-xl bg-gray-100 max-w-md">
       <h1 className="text-xl font-bold text-gray-700">
-        Virtualization with Search
+        Virtualization with Item Navigation
       </h1>
       <SearchBar
         query={query}

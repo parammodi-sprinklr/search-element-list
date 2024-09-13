@@ -13,7 +13,7 @@ const App = () => {
   useEffect(() => {
     // Simulate fetching items
     const fetchItems = () => {
-      const itemList = generateRandomArray(10000, 1, 100000);
+      const itemList = generateRandomArray(1000, 1, 10000);
       setItems(itemList);
     };
     fetchItems();

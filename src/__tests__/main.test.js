@@ -61,7 +61,7 @@ describe('Advanced Search Functionality', () => {
     optimalTimeTaken[0] * 1e6 + optimalTimeTaken[1] / 1e3 + 50; // Allow some leeway for comparisons due to edge cases, e.g., adding 1 or 2 to the log2 result
 
   //search should implement efficient algorithm to minimize comparistions
-  test('Test #1', () => {
+  test('search should be handled via optimized algorithm', () => {
     const startTime = process.hrtime(); // Record start time
 
     const index = search(largeArray, target);

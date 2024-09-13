@@ -19,7 +19,7 @@ const SearchBar = ({ query, onQueryChange, onSearch }) => {
         onClick={onSearch}
         className="px-6 py-2 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-300"
       >
-        Scroll
+        Find
       </button>
     </div>
   );

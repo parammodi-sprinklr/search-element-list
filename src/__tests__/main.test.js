@@ -7,71 +7,77 @@ import { generateRandomArray } from '../utils/generateRandomArray';
 
 import VirtualizedList from '../components/VirtualizedList';
 
-describe('Basic Search Functionality', () => {
-  const comparator = (arr, indexToCheck, target) => {
-    return arr[indexToCheck] === target;
-  };
+const optimalSearch = (arr, target) => {
+  let low = 0;
+  let high = arr.length - 1;
 
-  const items = [
-    'apple',
-    'banana',
-    'cherry',
-    'date',
-    'elderberry',
-    'fig',
-    'grape',
-  ];
+  while (low <= high) {
+    const mid = Math.floor((low + high) / 2);
+
+    if (arr[mid] === target) return mid;
+    if (arr[mid] < target) low = mid + 1;
+    else high = mid - 1;
+  }
+
+  return -1;
+};
+
+describe('Basic Search Functionality', () => {
+  const items = [10, 12, 14, 16, 18, 20, 22];
 
   //finds the index of an existing item
   test('Test #1', () => {
-    expect(search(items, 'cherry', comparator)).toBe(2);
+    expect(search(items, 14)).toBe(2);
   });
 
   //returns -1 for an item not found
   test('Test #2', () => {
-    expect(search(items, 'kiwi', comparator)).toBe(-1);
+    expect(search(items, 100)).toBe(-1);
   });
 
   //returns -1 for an empty array
   test('Test #3', () => {
-    expect(search([], 'cherry', comparator)).toBe(-1);
+    expect(search([], 14)).toBe(-1);
   });
 });
 
 describe('Advanced Search Functionality', () => {
   // Large array for the test
-  const target = 50120;
-  let largeArray = generateRandomArray(10000, 1, 100000);
+  const target = 950120;
+  let largeArray = generateRandomArray(100000, 1, 1000000);
 
-  if (!largeArray.find((_item) => _item === 50120)) {
-    largeArray.push(50120);
+  if (!largeArray.find((_item) => _item === 950120)) {
+    largeArray.push(950120);
     largeArray = largeArray.sort((a, b) => a - b);
   }
 
+  const optimalStartItem = process.hrtime(); // Record optimal start time
+
+  const index = optimalSearch(largeArray, target);
+
+  const optimalTimeTaken = process.hrtime(optimalStartItem); // Record optimal end time
+
+  const optimalTimeTakenMicroseconds =
+    optimalTimeTaken[0] * 1e6 + optimalTimeTaken[1] / 1e3 + 50; // Allow some leeway for comparisons due to edge cases, e.g., adding 1 or 2 to the log2 result
+
   //search should implement efficient algorithm to minimize comparistions
   test('Test #1', () => {
-    let compareCount = 0;
+    const startTime = process.hrtime(); // Record start time
 
-    const comparator = (arr, indexToCheck, target) => {
-      compareCount++;
-      return arr[indexToCheck] === target;
-    };
-    // Execute the search
-    const index = search(largeArray, target, comparator);
+    const index = search(largeArray, target);
+
+    const timeTaken = process.hrtime(startTime); // Record end time
+
+    const timeTakenMicroseconds = timeTaken[0] * 1e6 + timeTaken[1] / 1e3;
+
     const expectedIndex = largeArray.indexOf(target);
 
     // Verify the item was found correctly
     expect(index).toBe(expectedIndex);
 
-    // Calculate log2(n)
-    const maxLogComparisons = Math.log2(largeArray.length);
-
-    // Allow some leeway for comparisons due to edge cases, e.g., adding 1 or 2 to the log2 result
-    const comparisonThreshold = maxLogComparisons + 2;
-
-    // Ensure the comparison count does not exceed the threshold
-    expect(compareCount).toBeLessThanOrEqual(comparisonThreshold);
-    expect(compareCount).toBeGreaterThan(0);
+    expect(timeTakenMicroseconds).toBeLessThanOrEqual(
+      optimalTimeTakenMicroseconds
+    );
   });
 });
 

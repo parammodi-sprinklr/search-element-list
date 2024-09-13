@@ -38,22 +38,10 @@ describe('Virtualized List External Libraries', () => {
 });
 
 describe('Basic Search Functionality', () => {
-  const comparator = (arr, indexToCheck, target) => {
-    return arr[indexToCheck] === target;
-  };
-
-  const items = [
-    'apple',
-    'banana',
-    'cherry',
-    'date',
-    'elderberry',
-    'fig',
-    'grape',
-  ];
+  const items = [10, 12, 14, 16, 18, 20, 22];
 
   test('finds the index of an existing item', () => {
-    expect(search(items, 'cherry', comparator)).toBe(2);
+    expect(search(items, 14)).toBe(2);
   });
 });
 

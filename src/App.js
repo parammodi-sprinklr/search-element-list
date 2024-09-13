@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import VirtualizedList from './components/VirtualizedList';
 import SearchBar from './components/SearchBar';
 import { search } from './utils/search';
-import { comparator } from './utils/comparator';
 import { generateRandomArray } from './utils/generateRandomArray';
 
 const App = () => {
@@ -22,8 +21,7 @@ const App = () => {
 
   const handleSearch = () => {
     // candidate needs to implement this search function
-    // comparator is already defined, which checks for strict equal to comparision
-    const index = search(items, +query, comparator);
+    const index = search(items, +query);
     setScrollToIndex(index === -1 ? null : index);
   };
 

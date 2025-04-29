@@ -5,6 +5,7 @@ import SearchBar from './components/SearchBar';
 import { search } from './utils/search';
 import { generateRandomArray } from './utils/generateRandomArray';
 
+//App Component
 const App = () => {
   const [items, setItems] = useState([]);
   const [query, setQuery] = useState('');
